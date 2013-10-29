@@ -14,8 +14,10 @@ To install, download `go-focused-test` and add the following to your init file:
 
 	(run-go-tests)
 	(run-go-test-at-point)
+	(run-go-test-for-buffer)
 
 In my emacs init file I bind the two functions like so:
 
 	(define-key go-mode-map "\C-c \C-f" 'run-go-test-at-point)
+	(define-key go-mode-map "\C-c \C-b" 'run-go-test-for-buffer)
 	(define-key go-mode-map "\C-c \C-t" 'run-go-tests)
