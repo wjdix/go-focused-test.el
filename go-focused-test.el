@@ -16,6 +16,11 @@
   (interactive)
   (compile (format "go test -v . -run %s" (find-test-name-at-point))))
 
+(defun run-go-test-for-buffer ()
+  "Run test for the current buffer."
+  (interactive)
+  (compile (format "go test -v . -run '%s'" (find-all-go-test-names))))
+
 (defun find-test-name-at-point ()
   (let ((start (point)))
     (save-excursion
@@ -29,6 +34,15 @@
         (setq test-name (thing-at-point 'word)))
       ))
   test-name)
+
+(defun find-all-go-test-names ()
+  (interactive)
+  (setq all-go-test-names "")
+  (save-excursion
+    (point-min)
+    (while (search-forward-regexp "^[[:space:]]*func[[:space:]]*Test" nil t)
+      (setq all-go-test-names (concat all-go-test-names (concat "|" (thing-at-point 'word))))))
+  (message (substring all-go-test-names 1)))
 
 (provide 'go-focused-test)
 ;;; go-focused-test.el ends here
